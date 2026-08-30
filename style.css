@@ -1,8 +1,8 @@
 :root {
-  --bg: #0f1115;            /* 背景 */
-  --card: #1a1d24;          /* 卡片 */
-  --text: #e6e6e6;          /* 正文 */
-  --accent: #ff6b35;        /* 强调色 */
+  --bg: #d5e1fa;            /* 背景 */
+  --card: #84a4ef;          /* 卡片 */
+  --text: #030000;          /* 正文 */
+  --accent: #fb8b01;        /* 强调色 */
   --font: "JetBrains Mono", monospace;
 }
 
