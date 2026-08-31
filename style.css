@@ -2,18 +2,39 @@
   --bg: #d5e1fa;            /* 背景 */
   --card: #84a4ef;          /* 卡片 */
   --text: #030000;          /* 正文 */
-  --accent: #fb8b01;        /* 强调色 */
+  --accent: #ffffff;        /* 强调色 */
+  --link: #000000;          /* 链接 */
+  --line: #ffffff;         /* 分割线 */
   --font: "JetBrains Mono", monospace;
+  --content-width: 800px;
 }
 
 body {
+  margin: 0 auto;
+  padding: 0 20px;
   background: var(--bg);
   color: var(--text);
   font-family: var(--font);
   line-height: 1.6;
+  max-width: var(--content-width);
 }
 
-.container { max-width: 720px; margin: 0 auto; padding: 2rem; }
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 2px solid var(--line);
+}
+
+footer {
+  border-top: 2px solid var(--line);
+  text-align: right;
+}
+
+header h1 {
+  font-size: 3rem;
+  margin: 0;
+}
 
 /* 标签：圆角胶囊 */
 .tags { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -31,6 +52,15 @@ body {
   background: var(--card);
   border-radius: 12px;
   padding: 16px;
+  width: 100%;
 }
 
-a { color: var(--accent); }
+/* 链接 */
+a {
+  color: var(--link);
+}
+
+a:focus, 
+a:hover {
+  text-decoration: none;
+}
