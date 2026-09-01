@@ -7,15 +7,31 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class>
+  <aside class="sidebar">
+    <div>
+      <div class="side-logo">blureraser</div>
+      <div class="side-status"><span class="dot"></span> online</div>
+    </div>
+    <nav>
+      <a href="#home" class="active">~/home</a>
+      <a href="#stack">~/stack</a>
+      <a href="#projects">~/projects</a>
+      <a href="#now">~/now</a>
+    </nav>
+    <div class="side-meta">
+      <div>time: <span id="clock">--:--:--</span></div>
+      <div>locale: zh_CN.UTF-8</div>
+    </div>
+  </aside>
+  <main id="home">
     <!-- 头部：名字 + 一句话介绍 -->
     <header>
       <h1>Blur3raser的个人站</h1>
-      <p class="subtitle">所谓的“普通”跟“理所当然”到底是什么?</p>
+      <p class="subtitle"><span class="prompt">$</span> echo "All tragedy erased."<span class="cursor"></span></p>
     </header>
 
     <!-- 技术栈 -->
-    <section>
+    <section id="stack">
       <h2><s>未来可能会有的</s>技术栈</h2>
       <div class="tags">
         <span class="tag">Python</span>
@@ -27,33 +43,39 @@
     </section>
 
     <!-- 项目 -->
-    <section>
+    <section id="projects">
       <h2>项目</h2>
       <div class="cards">
-        <div class="card">
+        <a class="card" href="#">
           <h3>Scheduler 时间规划软件</h3>
           <p>Java/Swing 桌面应用，零依赖，托盘常驻。</p>
-        </div>
-        <div class="card">
+        </a>
+        <a class="card" href="#">
           <h3>竞赛题解集</h3>
           <p>算法竞赛刷题记录与题解。</p>
-        </div>
-        <div class="card">
+        </a>
+        <a class="card" href="#">
           <h3>这是一个占位符</h3>
           <p>这还是一个占位符</p>
-        </div>
+        </a>
       </div>
     </section>
 
     <!-- 当前状态（/now 区块） -->
-    <section>
+    <section id="now">
       <h2>最近在干什么</h2>
-      <ul>
-        <li>找cpc队友，找数模队友，找智能车队友</li>
-        <li>CS61B</li>
-        <li>计划：Rust + Godot 物理模拟游戏</li>
-        <li>如你所见，还在学前端</li>
-      </ul>
+      <div class="term">
+        <div class="term-bar">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="term-title">~ $ cat now.txt</span>
+        </div>
+        <div class="term-body">
+          <span class="prompt">$</span> 找cpc队友，找数模队友，找智能车队友<br>
+          <span class="prompt">$</span> CS61B<br>
+          <span class="prompt">$</span> 计划：Rust + Godot 物理模拟游戏<br>
+          <span class="prompt">$</span> <span id="type"></span><span class="cursor"></span>
+        </div>
+      </div>
     </section>
 
     <!-- 联系方式 -->
@@ -62,5 +84,7 @@
       <a href="https://github.com/blureraser/my-site">项目主页</a>
     </footer>
   </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
