@@ -10,7 +10,10 @@
   --font: "JetBrains Mono", monospace;
   --content-width: 1100px;
 }
-
+#stkPython     { --idc: #d97706; }
+#stkFront      { --idc: #ea580c; }
+#stkGodot      { --idc: #0e7490; }
+#stkAlgorithms { --idc: #4338ca; }
 body {
   display: grid;
   grid-template-columns: 230px 1fr;
@@ -135,15 +138,31 @@ nav a.active {
 }
 @keyframes blink { 50% { opacity: 0; } }
 
-/* 标签：圆角胶囊 */
-.tags { display: flex; flex-wrap: wrap; gap: 8px; }
-.tag {
-  background: var(--card);
-  border: 1px solid var(--accent);
-  border-radius: 999px;
-  padding: 4px 14px;
-  font-size: 0.9rem;
+/* 技术栈卡片 */
+.stkcards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap : 12px;
 }
+.stkcard {
+  display: block;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease, color 0.18s ease;
+}
+
+.stkcard:hover,
+.stkcard:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px #1e40af20;
+  color: #ffffff;
+  background: var(--idc);
+}
+
 
 /* 项目卡片 */
 .cards { display: grid; gap: 12px; }
