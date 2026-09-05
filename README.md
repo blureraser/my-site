@@ -7,3 +7,5 @@
 这样我就可以不用面对一窍不通的后端~~和购买域名的开销~~。
 
 [Cloudeflare搭建页面](https://my-site.blureraser.workers.dev/)
+
+使用了llm禁忌之力添加了hugo进行帖子管理
