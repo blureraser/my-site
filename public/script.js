@@ -18,7 +18,7 @@ const sections = [...document.querySelectorAll('section[id]')];
 const spy = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
-      links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
+      links.forEach(l => l.classList.toggle('active', l.hash === '#' + e.target.id));
     }
   });
 }, { rootMargin: '-45% 0px -50% 0px' });

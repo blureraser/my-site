@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body>
+  {{ partial "sidebar.html" . }}
+  <main>
+    <header class="page-head">
+      <h1>{{ .Title }}</h1>
+      <p class="subtitle">
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+        · {{ range .Params.tags }}<a href="/tags/{{ . | urlize }}/">#{{ . }}</a> {{ end }}
+      </p>
+    </header>
+    <article class="post-content">
+      {{ .Content }}
+    </article>
+    <a class="back" href="/posts/">← 返回列表</a>
+  </main>
+</body>
+</html>

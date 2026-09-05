@@ -1,0 +1,17 @@
+<aside class="sidebar">
+  <div>
+    <div class="side-logo">blureraser</div>
+    <div class="side-status"><span class="dot"></span> online</div>
+  </div>
+  <nav>
+    <a href="/">~/home</a>
+    <a href="/posts/">~/posts</a>
+    <a href="/#stack">~/stack</a>
+    <a href="/#projects">~/projects</a>
+    <a href="/#now">~/now</a>
+  </nav>
+  <div class="side-meta">
+    {{ if .IsHome }}<div>time: <span id="clock">--:--:--</span></div>{{ end }}
+    <div>locale: zh_CN.UTF-8</div>
+  </div>
+</aside>

@@ -1,28 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blur3raser - 个人主页</title>
-  <link rel="stylesheet" href="style.css">
+  {{ partial "head.html" . }}
 </head>
 <body>
-  <aside class="sidebar">
-    <div>
-      <div class="side-logo">blureraser</div>
-      <div class="side-status"><span class="dot"></span> online</div>
-    </div>
-    <nav>
-      <a href="#home" class="active">~/home</a>
-      <a href="#stack">~/stack</a>
-      <a href="#projects">~/projects</a>
-      <a href="#now">~/now</a>
-    </nav>
-    <div class="side-meta">
-      <div>time: <span id="clock">--:--:--</span></div>
-      <div>locale: zh_CN.UTF-8</div>
-    </div>
-  </aside>
+  {{ partial "sidebar.html" . }}
   <main id="home">
     <!-- 头部：名字 + 一句话介绍 -->
     <header>
@@ -34,19 +16,19 @@
     <section id="stack">
       <h2><s>未来可能会有的</s>技术栈</h2>
       <div class="stkcards">
-        <a class="stkcard" href="#" id="stkFront">
+        <a class="stkcard" href="/tags/front/" id="stkFront">
           <h3>前端</h3>
           <p>玩具这一块，满足表达欲这一块</p>
         </a>
-        <a class="stkcard" href="#" id="stkAlgorithms">
+        <a class="stkcard" href="/tags/algorithms/" id="stkAlgorithms">
           <h3>算法</h3>
           <p>蒟蒻又在乱抄模板了！</p>
         </a>
-        <a class="stkcard" href="#" id="stkPython">
+        <a class="stkcard" href="/tags/python/" id="stkPython">
           <h3>Python</h3>
           <p>"你们这谁最会摇Wheel？"</p>
         </a>
-        <a class="stkcard" href="#" id="stkGodot">
+        <a class="stkcard" href="/tags/godot/" id="stkGodot">
           <h3>Godot</h3>
           <p>等待戈多...</p>
         </a>
@@ -96,6 +78,6 @@
     </footer>
   </main>
 
-  <script src="script.js"></script>
+  <script src="/script.js"></script>
 </body>
 </html>

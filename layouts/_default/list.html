@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body>
+  {{ partial "sidebar.html" . }}
+  <main>
+    <header class="page-head">
+      <h1><span class="prompt">$</span> ls {{ .Title }}</h1>
+      <p class="subtitle">共 {{ len .Pages }} 篇</p>
+    </header>
+    <div class="post-list">
+      {{ range .Pages }}
+      <a class="post" href="{{ .RelPermalink }}">
+        <span class="post-date">{{ .Date.Format "2006-01-02" }}</span>
+        <h3>{{ .Title }}</h3>
+        <p>{{ .Summary }}</p>
+      </a>
+      {{ end }}
+    </div>
+  </main>
+</body>
+</html>
