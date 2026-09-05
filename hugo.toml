@@ -1,6 +1,6 @@
-baseURL = 'https://你的域名.pages.dev/'   # 部署后改成真实地址;CF 项目页能看到
-locale = 'zh-cn'          # v0.158+ 用 locale(languageCode 已废弃)
+baseURL = 'https://my-site.blureraser.workers.dev/'
+locale = 'zh-cn'
 title = 'Blur3raser'
 
 [taxonomies]
-  tag = 'tags'            # 只用 tags 分类,不生成 /categories/
+  tag = 'tags'

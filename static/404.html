@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="404 - 页面不存在,回到 Blur3raser 的个人站">
   <title>404 - Blur3raser</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="posts.css">
+  <!-- 必须根路径:404 会在任意深层路径(/posts/xxx/ 等)下被 serve,相对路径会解析错 -->
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/posts.css">
 </head>
 <body>
   <aside class="sidebar">
@@ -15,10 +16,11 @@
       <div class="side-status"><span class="dot"></span> online</div>
     </div>
     <nav>
-      <a href="index.html">~/home</a>
-      <a href="index.html#stack">~/stack</a>
-      <a href="index.html#projects">~/projects</a>
-      <a href="index.html#now">~/now</a>
+      <a href="/">~/home</a>
+      <a href="/posts/">~/posts</a>
+      <a href="/#stack">~/stack</a>
+      <a href="/#projects">~/projects</a>
+      <a href="/#now">~/now</a>
     </nav>
     <div class="side-meta">
       <div>status: 404 not_found</div>
@@ -27,13 +29,13 @@
   </aside>
 
   <main>
-
+    <!-- 头部:终端式报错 -->
     <header class="page-head">
       <h1><span class="prompt">$</span> 404</h1>
       <p class="subtitle">ls: 找不到你要的文件</p>
     </header>
 
-
+    <!-- 终端:演绎文件是怎么丢的,顺便列出站里真实存在的文件 -->
     <div class="term">
       <div class="term-bar">
         <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
@@ -48,23 +50,23 @@
       </div>
     </div>
 
-
+    <!-- 导航卡片:回得去的地方 -->
     <div class="cards" style="margin-top: 28px;">
-      <a class="card" href="index.html">
+      <a class="card" href="/">
         <h3>~/home</h3>
         <p>回到个人主页</p>
       </a>
-      <a class="card" href="index.html#stack">
+      <a class="card" href="/#stack">
         <h3>~/stack</h3>
         <p>看看我的技术栈</p>
       </a>
-      <a class="card" href="index.html#projects">
+      <a class="card" href="/#projects">
         <h3>~/projects</h3>
         <p>看看我的项目</p>
       </a>
     </div>
 
-
+    <!-- 联系方式 -->
     <footer>
       <a href="https://github.com/blureraser">GitHub</a> ·
       <a href="https://github.com/blureraser/my-site">网站GitHub主页</a>
