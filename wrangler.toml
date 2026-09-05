@@ -2,7 +2,7 @@
 # 存在此文件后,wrangler 不再触发 auto-config(不再自作主张跑 npx hugo)
 name = "my-site"
 compatibility_date = "2026-09-05"
-assets = { directory = "public", not_found_handling = "404.html" }
+assets = { directory = "public", not_found_handling = "404-page" }
 
 [build]
 command = "hugo --minify"
