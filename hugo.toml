@@ -4,3 +4,10 @@ title = 'Blur3raser'
 
 [taxonomies]
   tag = 'tags'
+
+[markup.goldmark.extensions.passthrough]
+enable = true
+
+[markup.goldmark.extensions.passthrough.delimiters]
+block = [['\[', '\]'], ['$$', '$$']]
+inline = [['\(', '\)'], ['$', '$']]

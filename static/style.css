@@ -14,6 +14,7 @@
 #stkFront      { --idc: #ea580c; }
 #stkGodot      { --idc: #0e7490; }
 #stkAlgorithms { --idc: #4338ca; }
+#stkGraphics   { --idc: #af451e; }
 body {
   display: grid;
   grid-template-columns: 230px 1fr;

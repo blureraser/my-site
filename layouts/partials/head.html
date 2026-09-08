@@ -4,3 +4,20 @@
 <title>{{ if .IsHome }}Blur3raser - 个人主页{{ else }}{{ .Title }} - Blur3raser{{ end }}</title>
 <link rel="stylesheet" href="/style.css">
 <link rel="stylesheet" href="/posts.css">
+<!-- KaTeX: md 中 LaTeX 公式渲染 -->
+<link rel="stylesheet" href="/katex/katex.min.css">
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/auto-render.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+      throwOnError: false
+    });
+  });
+</script>
