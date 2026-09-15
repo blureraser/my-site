@@ -11,3 +11,6 @@ enable = true
 [markup.goldmark.extensions.passthrough.delimiters]
 block = [['\[', '\]'], ['$$', '$$']]
 inline = [['\(', '\)'], ['$', '$']]
+
+[markup.highlight]
+style = 'vs'
