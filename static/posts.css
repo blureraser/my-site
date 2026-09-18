@@ -188,3 +188,20 @@
   font-size: 0.9rem;
 }
 .back:hover { text-decoration: underline; }
+
+/* 视频 */
+.post-content .post-video { margin: 20px 0; }
+.post-content video {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #000;
+}
+.post-content .post-video figcaption {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: var(--dim);
+  text-align: center;
+}

@@ -1,0 +1,19 @@
+{{- $name := .Get "src" -}}
+{{- $hasWebm := fileExists (printf "static/videos/%s.webm" $name) -}}
+{{- $hasMp4 := fileExists (printf "static/videos/%s.mp4" $name) -}}
+{{- if or $hasWebm $hasMp4 -}}
+{{- $loop := eq (.Get "loop") "true" -}}
+<figure class="post-video">
+  <video controls preload="none" playsinline{{ with .Get "poster" }} poster="{{ . }}"{{ end }}{{ if $loop }} autoplay loop muted{{ end }}>
+{{- if $hasWebm }}
+    <source src="/videos/{{ $name }}.webm" type="video/webm">
+{{- end }}
+{{- if $hasMp4 }}
+    <source src="/videos/{{ $name }}.mp4" type="video/mp4">
+{{- end }}
+  </video>
+  {{ with .Get "caption" }}<figcaption>{{ . }}</figcaption>{{ end }}
+</figure>
+{{- else -}}
+{{ errorf "video shortcode: static/videos/ 下找不到 %s.webm 或 %s.mp4" $name $name }}
+{{- end -}}
