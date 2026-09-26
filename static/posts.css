@@ -205,3 +205,22 @@
   color: var(--dim);
   text-align: center;
 }
+
+/* 游戏嵌入 */
+.post-content .post-game { margin: 20px 0; }
+.post-content .game-frame {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;          /* 兜底, shortcode 的 inline style 覆盖 */
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #ffffff;           /* 画布底色, 不跟主题变 */
+  overflow: hidden;
+}
+.post-content canvas.game-frame { touch-action: none; }
+.post-content .post-game figcaption {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: var(--dim);
+  text-align: center;
+}

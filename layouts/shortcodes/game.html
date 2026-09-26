@@ -1,0 +1,33 @@
+{{/* 用法: {{< game src="bricks" ratio="4 / 3" caption="…" >}}
+   两模式自动识别:
+     static/games/<src>.js          → 内联 canvas (继承站点 CSS 变量)
+     static/games/<src>/index.html  → iframe 隔离 (独立文档, 适合固定分辨率/多文件)
+   契约: canvas 带 data-game="<src>", 游戏 JS 自己 querySelectorAll 接管全部实例。
+   注意: style 属性里的插值必须过 safeCSS, 否则含 "/" 的值渲染成 ZgotmplZ。 */}}
+{{- $src := .Get "src" -}}
+{{- $ratio := .Get "ratio" | default "16 / 9" -}}
+{{- $id := .Get "id" | default (printf "game-%s" ($src | urlize)) -}}
+{{- $caption := .Get "caption" -}}
+{{- $style := printf "aspect-ratio: %s;" $ratio | safeCSS -}}
+{{- $iframeTarget := printf "static/games/%s/index.html" $src -}}
+{{- $jsTarget := printf "static/games/%s.js" $src -}}
+
+{{- if fileExists $iframeTarget -}}
+<figure class="post-game">
+  <iframe class="game-frame" src="/games/{{ $src }}/" loading="lazy"
+          style="{{ $style }}" title="{{ $caption | default $src }}"></iframe>
+  {{ with $caption }}<figcaption>{{ . }}</figcaption>{{ end }}
+</figure>
+{{- else if fileExists $jsTarget -}}
+<figure class="post-game">
+  <canvas class="game-frame" id="{{ $id }}" data-game="{{ $src }}" style="{{ $style }}"></canvas>
+  {{ with $caption }}<figcaption>{{ . }}</figcaption>{{ end }}
+</figure>
+{{- $key := printf "gamejs-%s" $src -}}
+{{- if not (.Page.Store.Get $key) -}}
+{{- .Page.Store.Set $key true -}}
+<script defer src="/games/{{ $src }}.js"></script>
+{{- end -}}
+{{- else -}}
+{{- errorf "game shortcode: static/games/ 下既没有 %s 也没有 %s" $iframeTarget $jsTarget -}}
+{{- end -}}

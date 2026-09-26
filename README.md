@@ -1,6 +1,6 @@
 # blureraser的个人站
 
-实则借这个机会学习前端，所以目前还是纯手写。
+实则借这个机会学习前端，**使用了llm禁忌之力添加了hugo进行帖子管理**，所以也可以认为这是一个hugo模板。
 
 上传到 GitHub 上后由 Cloudeflare Pages 自动构建部署。
 
@@ -8,4 +8,3 @@
 
 [Cloudeflare搭建页面](https://my-site.blureraser.workers.dev/)
 
-使用了llm禁忌之力添加了hugo进行帖子管理

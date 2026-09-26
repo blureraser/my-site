@@ -116,7 +116,7 @@ $$v' = v + \frac{j}{m}\hat n, \qquad \omega' = \omega + I^{-1}\left(r\times (j\h
 
 结合sat碰撞检测就可以将这种方法扩展到物体之间，我们就应该可以赛博搭积木了（吗？）。于是我写了这个东西，目前美工全是占位符，也没有互动内容没有物体破坏：
 
-{{< game src="bricks" ratio="4 / 3" caption=“bricks: 2D 刚体堆叠演示” >}}
+{{< game src="bricks" ratio="4 / 3" caption="bricks: 2D 刚体堆叠演示" >}}
 
 但是我们悲剧的发现堆的越高行为越奇怪，平均点这种处理方法引入了严重的滑移。
 
