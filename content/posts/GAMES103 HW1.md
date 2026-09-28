@@ -60,7 +60,7 @@ $$q_{A'} = (0, x', y', z')$$
 ---
 
 ### 二、刚体动力学
-####1. 惯量张量
+#### 1. 惯量张量
 
 刚体角动量的定义（$x$ 为相对质心的位置，$\dot x = \omega\times x$）：
 $$L = \int x\times \dot x\,dm = \int x\times(\omega\times x)\,dm$$
