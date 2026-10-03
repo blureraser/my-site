@@ -10,7 +10,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / 'data' / 'typing.json'
 WEB = ROOT / 'static' / 'typing.json'
 WEEKS = 26
-THRESHOLDS = (200, 500, 1000)
+THRESHOLDS = (1200, 2500, 5000)
 
 
 def level(chars):

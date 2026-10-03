@@ -294,25 +294,25 @@
     (lines || []).forEach(l => print(l));
   };
 
-  let history = [];
+  const cmdHistory = [];
   let hIdx = 0;
 
   input.addEventListener('keydown', e => {
     if (e.key === 'Enter') {
       const v = input.value;
       input.value = '';
-      if (v.trim()) history.push(v.trim());
-      hIdx = history.length;
+      if (v.trim()) cmdHistory.push(v.trim());
+      hIdx = cmdHistory.length;
       exec(v);
     } else if (e.key === 'ArrowUp') {
-      if (!history.length) return;
+      if (!cmdHistory.length) return;
       hIdx = Math.max(0, hIdx - 1);
-      input.value = history[hIdx] || '';
+      input.value = cmdHistory[hIdx] || '';
       e.preventDefault();
     } else if (e.key === 'ArrowDown') {
-      if (!history.length) return;
-      hIdx = Math.min(history.length, hIdx + 1);
-      input.value = history[hIdx] || '';
+      if (!cmdHistory.length) return;
+      hIdx = Math.min(cmdHistory.length, hIdx + 1);
+      input.value = cmdHistory[hIdx] || '';
       e.preventDefault();
     }
   });
@@ -337,6 +337,40 @@
   };
 
   window.addEventListener('resize', redraw);
+
+  // 局部导航：换页只替换 <main>，左栏与右栏终端保持不重载
+  const partial = async (url, push) => {
+    let doc;
+    try {
+      const res = await fetch(url.href);
+      if (!res.ok) throw new Error(res.status);
+      doc = new DOMParser().parseFromString(await res.text(), 'text/html');
+    } catch { location.href = url.href; return; }
+    const cur = document.querySelector('main');
+    const next = doc.querySelector('main');
+    if (!cur || !next) { location.href = url.href; return; }
+    cur.replaceWith(next);
+    document.title = doc.title;
+    document.documentElement.classList.remove('intro', 'noscroll', 'exit', 'reveal', 'launch');
+    if (push) history.pushState({}, '', url.href);
+    const anchor = url.hash ? document.getElementById(url.hash.slice(1)) : null;
+    if (anchor) anchor.scrollIntoView();
+    else window.scrollTo(0, 0);
+    window.dispatchEvent(new CustomEvent('rail:partial'));
+  };
+
+  document.addEventListener('click', e => {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const a = e.target.closest('a');
+    if (!a || a.target === '_blank' || a.hasAttribute('download')) return;
+    const url = new URL(a.href, location.href);
+    if (url.origin !== location.origin) return;
+    if (url.pathname === location.pathname && url.search === location.search) return;
+    e.preventDefault();
+    partial(url, true);
+  });
+
+  window.addEventListener('popstate', () => partial(new URL(location.href), false));
 
   print('blureraser :: rail shell ready', 'dim');
   print('[info] type `help` for available commands', 'dim');
