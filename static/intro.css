@@ -1,0 +1,183 @@
+:root {
+  --k: 1;
+  --d1: calc(600ms * var(--k));
+  --d2: calc(320ms * var(--k));
+  --d3: calc(240ms * var(--k));
+  --d4: calc(440ms * var(--k));
+  --t-wave: var(--d1);
+  --t-flip: calc(var(--d1) + var(--d2) + var(--d3));
+}
+
+html.noscroll { overflow: hidden; }
+
+.side-intro { display: none; }
+
+html.intro .side-intro {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+}
+
+html.intro .side-intro.gone { display: none; }
+
+.intro-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--bg);
+  background-image: radial-gradient(circle, rgba(0,0,0,.045) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+html.intro.reveal .intro-bg { animation: intro-bg-out calc(var(--d4) * .7) ease both; }
+
+@keyframes intro-bg-out {
+  from { opacity: 1 }
+  to { opacity: 0 }
+}
+
+.intro-mark {
+  position: relative;
+  z-index: 1;
+  width: 320px;
+  height: 320px;
+  overflow: visible;
+  color: var(--scard);
+}
+
+.intro-line {
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  transform-box: view-box;
+  transform-origin: 52px 213.5px;
+}
+
+html.intro .intro-line {
+  animation: intro-line-slide var(--d1) linear forwards,
+             intro-line-retract calc(var(--d2) * .43) linear var(--t-wave) forwards;
+}
+
+@keyframes intro-line-slide {
+  from { transform: translateX(calc(-74.37vw + 141px)) scaleX(1) }
+  to { transform: translateX(0) scaleX(1) }
+}
+
+@keyframes intro-line-retract {
+  from { transform: translateX(0) scaleX(1) }
+  to { transform: translateX(0) scaleX(0) }
+}
+
+.intro-ring {
+  stroke: #000;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transform: rotate(-90deg);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes intro-ring-draw {
+  from { stroke-dashoffset: 1 }
+  to { stroke-dashoffset: 0 }
+}
+
+html.intro .intro-ring { animation: intro-ring-draw var(--d1) linear both; }
+
+.intro-wave {
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+}
+
+@keyframes intro-draw {
+  from { stroke-dashoffset: 1; opacity: 0 }
+  15% { opacity: 1 }
+  to { stroke-dashoffset: 0; opacity: 1 }
+}
+
+html.intro .intro-wave { animation: intro-draw var(--d2) linear var(--t-wave) both; }
+
+html.intro main > *,
+html.intro .sidebar > * { opacity: 0; }
+
+html.intro .sidebar { visibility: hidden; }
+html.intro.reveal .sidebar { visibility: visible; }
+
+html.intro .side-mark { opacity: 0; }
+
+@keyframes intro-fade-up {
+  from { opacity: 0; transform: translateY(10px) }
+  to { opacity: 1; transform: none }
+}
+
+html.intro.reveal main > *,
+html.intro.reveal .sidebar > * { animation: intro-fade-up 380ms ease both; }
+
+html.intro.reveal main > *:nth-child(2),
+html.intro.reveal .sidebar > *:nth-child(2) { animation-delay: 70ms }
+
+html.intro.reveal main > *:nth-child(3),
+html.intro.reveal .sidebar > *:nth-child(3) { animation-delay: 140ms }
+
+html.intro.reveal main > *:nth-child(4) { animation-delay: 210ms }
+
+html.intro.reveal main > *:nth-child(5) { animation-delay: 280ms }
+
+.intro-caption {
+  position: relative;
+  z-index: 1;
+  margin-top: 34px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 520ms ease, transform 520ms ease;
+}
+
+html.intro.launch .intro-caption {
+  opacity: 1;
+  transform: none;
+}
+
+html.intro.exit .intro-caption {
+  opacity: 0;
+  transition-duration: 220ms;
+}
+
+.intro-title {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: var(--scard);
+  letter-spacing: .04em;
+}
+
+.intro-title::before { content: '>_ '; }
+
+.intro-hint {
+  margin-top: 12px;
+  font-size: .85rem;
+  color: var(--dim);
+  animation: intro-blink 1.4s ease-in-out infinite;
+}
+
+@keyframes intro-blink {
+  0%, 100% { opacity: 1 }
+  50% { opacity: .22 }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .side-intro { display: none !important; }
+  html.intro main > *, html.intro .sidebar > *, html.intro .side-mark { opacity: 1; }
+  html.intro .sidebar { visibility: visible; }
+  html.intro main > *, html.intro .sidebar > * { animation: none; }
+}

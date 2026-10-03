@@ -2,6 +2,38 @@
 <html lang="zh-cn">
 <head>
   {{ partial "head.html" . }}
+  <link rel="stylesheet" href="/intro.css">
+  <script>
+  (() => {
+    const html = document.documentElement;
+    const q = new URLSearchParams(location.search);
+
+    setTimeout(() => {
+      if (window.__introJsAlive) return;
+      const s = document.createElement('script');
+      s.src = '/script.js';
+      document.body.appendChild(s);
+    }, 3000);
+
+    const navEntry = performance.getEntriesByType('navigation')[0];
+    const legacyNav = performance.navigation;
+    const isReload = navEntry
+      ? navEntry.type === 'reload'
+      : Boolean(legacyNav && legacyNav.type === 1);
+
+    let k = 1;
+    try {
+      if (q.get('reset')) sessionStorage.removeItem('intro-seen');
+      if (q.get('k')) sessionStorage.setItem('proto-k', q.get('k'));
+      k = parseFloat(sessionStorage.getItem('proto-k') ?? '1');
+      if (!Number.isFinite(k) || k <= 0) k = 1;
+      html.style.setProperty('--k', k);
+      if (!isReload && sessionStorage.getItem('intro-seen')) return;
+    } catch {}
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    html.classList.add('intro', 'noscroll');
+  })();
+  </script>
 </head>
 <body>
   {{ partial "sidebar.html" . }}
@@ -73,7 +105,22 @@
       <a href="https://github.com/blureraser/my-site">网站GitHub主页</a>
     </footer>
   </main>
+  
+  <div class="side-intro" id="intro" aria-hidden="true">
+    <div class="intro-bg"></div>
+    <svg class="intro-mark" id="introMark" viewBox="0 0 476 476" fill="none">
+      <line class="intro-line" id="introLine" x1="-134" y1="213.5" x2="52" y2="213.5"/>
+      <circle class="intro-ring" id="introRing" cx="238" cy="238" r="233" pathLength="1"/>
+      <path class="intro-wave" id="introWave" pathLength="1"
+            d="M52.0 213.5 C53.9 212.7 55.7 211.1 57.6 211.1 C58.5 211.2 59.4 211.8 60.3 212.5 C61.3 213.3 62.4 214.4 63.4 215.8 C65.4 218.3 67.3 221.6 69.3 225.0 C74.6 234.6 80.0 247.9 85.4 257.0 C86.3 258.6 87.2 259.9 88.1 260.8 C89.0 261.8 90.0 263.0 90.9 262.8 C91.3 262.8 91.6 261.7 92.0 261.7 C92.2 261.7 92.3 262.3 92.5 262.2 C92.8 262.0 93.0 261.0 93.3 260.3 C101.0 241.5 108.7 212.6 116.5 197.9 C117.8 195.2 119.2 193.7 120.5 193.2 C121.5 192.9 122.5 193.8 123.5 194.7 C128.0 198.5 132.4 207.5 136.9 211.3 C139.2 213.2 141.6 214.0 143.9 214.5 C144.9 214.7 145.8 214.8 146.8 214.7 C149.1 214.4 151.4 213.5 153.7 212.2 C155.1 211.5 156.5 210.5 157.9 209.0 C160.7 206.0 163.5 202.1 166.4 197.5 C168.5 194.1 170.6 188.6 172.7 185.5 C174.4 182.9 176.1 180.5 177.9 180.1 C178.8 179.8 179.7 180.7 180.7 181.4 C184.3 184.2 188.0 189.8 191.7 192.4 C192.4 193.0 193.2 193.4 193.9 193.5 C196.2 193.7 198.5 193.4 200.8 193.1 C204.4 192.5 208.1 185.7 211.7 185.7 C213.0 185.7 214.3 185.7 215.5 185.7 C217.0 185.7 218.4 187.1 219.8 188.4 C221.5 189.9 223.2 192.6 224.9 194.4 C226.9 196.3 228.8 198.2 230.8 199.4 C231.9 200.0 232.9 200.4 234.0 200.4 C235.9 200.4 237.8 200.4 239.7 198.8 C243.9 195.3 248.2 181.1 252.4 178.5 C255.0 177.0 257.6 179.3 260.2 180.6 C262.6 181.7 264.9 184.7 267.2 186.4 C271.6 189.5 276.0 192.4 280.4 194.1 C283.4 195.3 286.4 195.8 289.4 195.9 C293.5 196.0 297.6 196.2 301.6 196.1 C304.7 196.0 307.8 195.1 310.9 193.9 C313.6 192.9 316.3 191.9 319.0 189.9 C321.5 188.0 324.0 185.5 326.5 182.6 C329.5 179.0 332.5 173.2 335.6 170.0 C336.7 168.8 337.9 168.4 339.0 167.6"/>
+    </svg>
+    <div class="intro-caption">
+      <div class="intro-title">blureraser</div>
+      <div class="intro-hint">按任意键进入</div>
+    </div>
+  </div>
 
-  <script src="/script.js"></script>
+  <script src="/intro.js"></script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "624d0918e2874f3198c99c9017744a8a"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
