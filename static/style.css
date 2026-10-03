@@ -9,6 +9,13 @@
   --line: #dbe3f0;          /* 分割线 */
   --font: "JetBrains Mono", monospace;
   --content-width: 1100px;
+  --side-w: clamp(260px, 18%, 340px);      /* 左栏宽度 */
+  --rail-w: clamp(320px, 26%, 520px);      /* 右栏宽度 */
+  --h0: #e8edf7;            /* 热力图 · 空白 */
+  --h1: #c7d6f2;            /* 热力图 · 1 档（= --accent） */
+  --h2: #8fabdd;            /* 热力图 · 2 档 */
+  --h3: #4d6fc4;            /* 热力图 · 3 档 */
+  --h4: #1e40af;            /* 热力图 · 4 档（= --scard） */
 }
 #stkPython     { --idc: #b83117; }
 #stkFront      { --idc: #2954e5; }
@@ -17,7 +24,7 @@
 #stkGraphics   { --idc: #0e7146; }
 body {
   display: grid;
-  grid-template-columns: 230px 1fr;
+  grid-template-columns: var(--side-w) minmax(0, 1fr) var(--rail-w);
   margin: 0 auto;
   padding: 0 20px;
   background: var(--bg);
@@ -26,7 +33,7 @@ body {
   color: var(--text);
   font-family: var(--font);
   line-height: 1.6;
-  max-width: var(--content-width);
+  max-width: none;
 }
 
 html { scroll-behavior: smooth; }
@@ -37,7 +44,7 @@ html { scroll-behavior: smooth; }
 }
 
 main {
-  padding: 40px 24px;
+  padding: 40px 24px 40px 20px;
   min-width: 0;
 }
 
@@ -69,11 +76,13 @@ header h1 {
   position: sticky;
   top: 0;
   height: 100vh;
-  padding: 28px 16px 20px 0;
+  padding: 28px 0 20px;
   border-right: 1px solid var(--line);
   display: flex;
   flex-direction: column;
   gap: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .side-logo {
@@ -123,15 +132,26 @@ header h1 {
 }
 .side-meta div { padding: 2px 0; }
 
+/* 右栏（宽屏预留） */
+.rail {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: 28px 0 20px 20px;
+  border-left: 1px solid var(--line);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
 nav {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 }
 nav a {
   color: var(--dim);
   text-decoration: none;
-  padding: 6px 10px;
+  padding: 9px 12px;
   border-radius: 6px;
   transition: background 0.15s, color 0.15s;
 }
@@ -160,7 +180,7 @@ nav a.active {
 /* 技术栈卡片 */
 .stkcards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap : 12px;
 }
 .stkcard {
@@ -197,6 +217,7 @@ nav a.active {
   border-radius: 12px;
   padding: 16px;
   width: 100%;
+  box-sizing: border-box;
   transition: background 0.18s ease, transform 0.18s ease;
 }
 
@@ -247,9 +268,53 @@ footer a:hover {
 .term-title { margin-left: 8px; }
 .term-body { padding: 14px 18px; font-size: 0.85rem; }
 
+/* 打字热力图（近 14 周 × 7 天，格子按容器比例自适应） */
+.heat-block { width: 100%; }
+.heat-months {
+  display: flex;
+  gap: 1px;
+  margin-bottom: 4px;
+  font-size: 0.6rem;
+  line-height: 1;
+  color: var(--dim);
+}
+.heat-months span { white-space: nowrap; overflow: hidden; }
+.heat-wrap { display: grid; grid-template-columns: auto 1fr; gap: 4px; }
+.heat-dow {
+  display: grid;
+  grid-template-rows: repeat(7, 1fr);
+  gap: 1px;
+  font-size: 0.5rem;
+  line-height: 1;
+  color: var(--dim);
+  text-align: right;
+}
+.heat-grid {
+  display: grid;
+  grid-template-rows: repeat(7, auto);
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 1px;
+  align-items: start;
+}
+.hcell { display: block; aspect-ratio: 1; border-radius: 2px; background: var(--h0); }
+.hcell.void { background: transparent; }
+.hcell.lv1 { background: var(--h1); }
+.hcell.lv2 { background: var(--h2); }
+.hcell.lv3 { background: var(--h3); }
+.hcell.lv4 { background: var(--h4); }
+
+/* 中屏：右栏让位，回到两栏 */
+@media (max-width: 1439px) {
+  body { grid-template-columns: var(--side-w) minmax(0, 1fr); }
+  .rail { display: none; }
+}
+
 /* 窄屏：侧边栏降级为顶栏 */
 @media (max-width: 800px) {
   body { grid-template-columns: 1fr; }
+  .heat-block { display: none; }
+  .stkcards { grid-template-columns: 1fr; }
   .sidebar {
     position: static;
     height: auto;

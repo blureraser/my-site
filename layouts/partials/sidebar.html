@@ -11,12 +11,29 @@
     </div>
     <div class="side-status"><span class="dot"></span> online</div>
   </div>
+  {{ with hugo.Data.typing }}
+  <div class="heat-block">
+    <div class="heat-months">
+      {{- range .months }}
+      <span style="flex: {{ .span }}">{{ .label }}</span>
+      {{- end }}
+    </div>
+    <div class="heat-wrap">
+      <div class="heat-dow">
+        <span></span><span>一</span><span></span><span>三</span><span></span><span>五</span><span></span>
+      </div>
+      <div class="heat-grid">
+        {{- range .weeks }}{{ range . }}{{ if . }}<span class="hcell lv{{ .lv }}" title="{{ .d }} · {{ .c }} 字"></span>{{ else }}<span class="hcell void"></span>{{ end }}{{ end }}{{ end }}
+      </div>
+    </div>
+  </div>
+  {{ end }}
   <nav>
-    <a href="/">~/home</a>
-    <a href="/posts/">~/posts</a>
-    <a href="/#stack">~/stack</a>
-    <a href="/#projects">~/projects</a>
-    <a href="/#now">~/now</a>
+    <a href="/">home</a>
+    <a href="/posts/">posts</a>
+    <a href="/#stack">stack</a>
+    <a href="/#projects">projects</a>
+    <a href="/#now">now</a>
   </nav>
   <div class="side-meta">
     {{ if .IsHome }}<div>time: <span id="clock">--:--:--</span></div>{{ end }}

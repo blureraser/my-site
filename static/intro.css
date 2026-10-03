@@ -163,18 +163,6 @@ html.intro.exit .intro-caption {
 
 .intro-title::before { content: '>_ '; }
 
-.intro-hint {
-  margin-top: 12px;
-  font-size: .85rem;
-  color: var(--dim);
-  animation: intro-blink 1.4s ease-in-out infinite;
-}
-
-@keyframes intro-blink {
-  0%, 100% { opacity: 1 }
-  50% { opacity: .22 }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .side-intro { display: none !important; }
   html.intro main > *, html.intro .sidebar > *, html.intro .side-mark { opacity: 1; }
