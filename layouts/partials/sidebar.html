@@ -35,8 +35,18 @@
     <a href="/#projects">projects</a>
     <a href="/#now">now</a>
   </nav>
+  {{ with where site.RegularPages "Section" "posts" }}
+  <div class="side-posts">
+    <div class="side-h">recent posts</div>
+    {{ range first 4 . }}
+    <a href="{{ .RelPermalink }}">
+      <span class="sp-t">{{ .Title }}</span>
+      <span class="sp-d">{{ .Date.Format "01-02" }}</span>
+    </a>
+    {{ end }}
+  </div>
+  {{ end }}
   <div class="side-meta">
-    {{ if .IsHome }}<div>time: <span id="clock">--:--:--</span></div>{{ end }}
     <div>locale: zh_CN.UTF-8</div>
   </div>
 </aside>

@@ -11,11 +11,12 @@
   --content-width: 1100px;
   --side-w: clamp(260px, 18%, 340px);      /* 左栏宽度 */
   --rail-w: clamp(320px, 26%, 520px);      /* 右栏宽度 */
-  --h0: #e8edf7;            /* 热力图 · 空白 */
-  --h1: #c7d6f2;            /* 热力图 · 1 档（= --accent） */
-  --h2: #8fabdd;            /* 热力图 · 2 档 */
-  --h3: #4d6fc4;            /* 热力图 · 3 档 */
-  --h4: #1e40af;            /* 热力图 · 4 档（= --scard） */
+  /* 热力图 5 档：由 --scard 派生，跟随 theme 命令改色 */
+  --h0: color-mix(in srgb, var(--scard) 10%, #fff);
+  --h1: color-mix(in srgb, var(--scard) 21%, #fff);
+  --h2: color-mix(in srgb, var(--scard) 45%, #fff);
+  --h3: color-mix(in srgb, var(--scard) 76%, #fff);
+  --h4: var(--scard);
 }
 #stkPython     { --idc: #b83117; }
 #stkFront      { --idc: #2954e5; }
@@ -244,29 +245,58 @@ footer a:hover {
   text-decoration: none;
 }
 
-/* 终端窗口组件  */
-.term {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  overflow: hidden;
-}
-.term-bar {
+/* 侧栏最近文章 */
+.side-posts {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 14px;
-  background: var(--bg);
-  border-bottom: 1px solid var(--line);
+  flex-direction: column;
+  gap: 2px;
+}
+.side-h {
   font-size: 0.78rem;
   color: var(--dim);
+  letter-spacing: 0.04em;
+  opacity: 0.75;
+  margin-bottom: 6px;
 }
-.dot { width: 10px; height: 10px; border-radius: 50%; }
-.dot.r { background: #ff5f57; }
-.dot.y { background: #febc2e; }
-.dot.g { background: #28c840; }
-.term-title { margin-left: 8px; }
-.term-body { padding: 14px 18px; font-size: 0.85rem; }
+.side-posts a {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-left: -8px;
+  padding: 5px 8px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.sp-t {
+  font-size: 0.86rem;
+  color: var(--text);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.sp-d {
+  font-size: 0.72rem;
+  color: var(--dim);
+  opacity: 0.65;
+}
+.side-posts a:hover {
+  background: var(--h1);
+}
+.side-posts a:hover .sp-t {
+  color: var(--scard);
+}
+
+/* 最近在干什么 */
+.now-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.now-list p {
+  margin: 0;
+  font-size: 0.9rem;
+}
 
 /* 打字热力图（近 14 周 × 7 天，格子按容器比例自适应） */
 .heat-block { width: 100%; }

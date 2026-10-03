@@ -8,6 +8,8 @@
   <!-- 必须根路径:404 会在任意深层路径(/posts/xxx/ 等)下被 serve,相对路径会解析错 -->
   <link rel="stylesheet" href="/style.css">
   <link rel="stylesheet" href="/posts.css">
+  <link rel="stylesheet" href="/rail.css?v=2">
+  <script defer src="/rail.js?v=2"></script>
 </head>
 <body>
   <aside class="sidebar">
@@ -53,15 +55,15 @@
     <!-- 导航卡片:回得去的地方 -->
     <div class="cards" style="margin-top: 28px;">
       <a class="card" href="/">
-        <h3>~/home</h3>
+        <h3>home</h3>
         <p>回到个人主页</p>
       </a>
       <a class="card" href="/#stack">
-        <h3>~/stack</h3>
+        <h3>stack</h3>
         <p>看看我的技术栈</p>
       </a>
       <a class="card" href="/#projects">
-        <h3>~/projects</h3>
+        <h3>projects</h3>
         <p>看看我的项目</p>
       </a>
     </div>

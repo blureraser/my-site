@@ -8,6 +8,7 @@ import sys
 DB = pathlib.Path.home() / '.local/share/fcitx5/input-counter/stats.db'
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / 'data' / 'typing.json'
+WEB = ROOT / 'static' / 'typing.json'
 WEEKS = 26
 THRESHOLDS = (200, 500, 1000)
 
@@ -79,13 +80,14 @@ def main():
         'months': months,
     }
 
+    payload = json.dumps(data, ensure_ascii=False, indent=1) + '\n'
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(data, ensure_ascii=False, indent=1) + '\n',
-                   encoding='utf-8')
+    OUT.write_text(payload, encoding='utf-8')
+    WEB.write_text(payload, encoding='utf-8')
 
     filled = sum(1 for col in weeks for x in col if x and x['c'] > 0)
     span = sum(1 for col in weeks for x in col if x)
-    print('写入 {}'.format(OUT.relative_to(ROOT)))
+    print('写入 {} 与 {}'.format(OUT.relative_to(ROOT), WEB.relative_to(ROOT)))
     print('窗口 {} 周 · {} 天有数据 · 累计 {} 字 · 生成于 {}'.format(
         WEEKS, filled, data['total'], data['generated']))
 

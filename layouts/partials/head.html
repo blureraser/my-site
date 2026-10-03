@@ -4,6 +4,8 @@
 <title>{{ if .IsHome }}Blur3raser - 个人主页{{ else }}{{ .Title }} - Blur3raser{{ end }}</title>
 <link rel="stylesheet" href="/style.css">
 <link rel="stylesheet" href="/posts.css">
+<link rel="stylesheet" href="/rail.css?v={{ now.Unix }}">
+<script defer src="/rail.js?v={{ now.Unix }}"></script>
 <!-- KaTeX: md 中 LaTeX 公式渲染 -->
 <link rel="stylesheet" href="/katex/katex.min.css">
 <script defer src="/katex/katex.min.js"></script>
