@@ -195,25 +195,6 @@
     c.globalAlpha = 1;
   };
 
-  const drawMark = (c, t, w, h) => {
-    c.clearRect(0, 0, w, h);
-    if (!w || !h) return;
-    const cx = w / 2, cy = h / 2, r = Math.min(w, h) * 0.42;
-    c.strokeStyle = cssVar('--text') || '#000';
-    c.lineWidth = 1;
-    c.beginPath(); c.arc(cx, cy, r, 0, 6.2832); c.stroke();
-    c.strokeStyle = cssVar('--scard') || '#1e40af';
-    c.lineWidth = 2;
-    c.lineCap = 'round';
-    c.beginPath();
-    for (let x = -r; x <= r; x += 2) {
-      const p = x / r;
-      const y = cy + Math.sin(p * 5.5 + t * 1.4) * Math.sin(p * 2.2) * r * 0.42;
-      if (x === -r) c.moveTo(cx + x, y); else c.lineTo(cx + x, y);
-    }
-    c.stroke();
-  };
-
   const barColor = v => v >= 1000 ? '#1e40af' : v >= 500 ? '#4d6fc4' : v >= 200 ? '#8fabdd' : v > 0 ? '#c7d6f2' : '#e8edf7';
 
   const drawHeat = (c, t, w, h) => {
@@ -247,7 +228,6 @@
     clear:   { desc: '清空输出',            run: () => { out.innerHTML = ''; return []; } },
     gpu:     { desc: '显卡 3D',             run: () => shape('gpu') },
     pad:     { desc: 'NES 手柄 3D',         run: () => shape('pad') },
-    mark:    { desc: '站点标志',            run: () => { title.textContent = '~ $ mark'; animate(drawMark); return ['[ok] mark loaded']; } },
     bricks:  { desc: '2D 刚体堆叠（手写）', run: () => {
       halt();
       unframe();
