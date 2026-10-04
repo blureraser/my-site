@@ -11,8 +11,8 @@
 <script defer src="/katex/katex.min.js"></script>
 <script defer src="/katex/auto-render.min.js"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    renderMathInElement(document.body, {
+  (() => {
+    const opts = {
       delimiters: [
         { left: "$$", right: "$$", display: true },
         { left: "$", right: "$", display: false },
@@ -20,6 +20,14 @@
         { left: "\\[", right: "\\]", display: true }
       ],
       throwOnError: false
+    };
+    document.addEventListener("DOMContentLoaded", () => {
+      renderMathInElement(document.body, opts);
     });
-  });
+    // rail.js 的局部导航只替换 <main>，公式需要对新内容重新渲染
+    window.addEventListener("rail:partial", () => {
+      const main = document.querySelector("main");
+      if (main) renderMathInElement(main, opts);
+    });
+  })();
 </script>
