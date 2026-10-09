@@ -1,3 +1,26 @@
+/* 自托管字体: JetBrains Mono (latin 子集, 汉字回落到 --font 里的中文字体) */
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/jetbrains-mono-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/jetbrains-mono-latin-700-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/jetbrains-mono-latin-400-italic.woff2") format("woff2");
+}
+
 :root {
   --bg: #f2f5fb;            /* 背景 */
   --card: #ffffff;          /* 卡片 */
@@ -7,7 +30,7 @@
   --dim: #64748b;           /* 次要文字 */
   --link: #1d4ed8;          /* 链接 */
   --line: #dbe3f0;          /* 分割线 */
-  --font: "JetBrains Mono", monospace;
+  --font: "JetBrains Mono", "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC", monospace;
   --content-width: 1100px;
   --side-w: clamp(260px, 18%, 340px);      /* 左栏宽度 */
   --rail-w: clamp(320px, 26%, 520px);      /* 右栏宽度 */
