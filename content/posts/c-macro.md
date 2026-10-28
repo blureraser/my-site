@@ -1,8 +1,8 @@
 ---
-title: "C中的宏trick"
+title: "C中的一个宏trick让我的寿命折损"
 date: 2026-10-13
-tags: ["cpp", "algorithms", "java"]
-summary: "C中的宏trick: 难道真的不需要template"
+tags: ["c", "language"]
+summary: "当想要浪费时间来折磨心智的时候，你应当重构自己写的代码"
 ---
 
 我在玩 raylib 的时候写下了这样的代码：
@@ -172,8 +172,25 @@ int main() {
 
     addtextBox(1, "number1: %d", &number1, BLACK, format(int));
 ```
-最后还不得不引入了GNU C的\{\}表达式才完成工作。另外，这样的函数定义会有安全隐患，不能在局部作用域进行这样的`addtextBox`。但无论怎么说，也是通过三个参数（格式化字符串，指针，format(TYPE)）对一个变量的追踪。
+最后还不得不引入了GNU C的\{\}表达式才完成工作。另外，这样的函数定义会有安全隐患，不能在局部作用域进行这样的`addtextBox`，功能也相对局限。但无论怎么说，也是通过三个参数（格式化字符串，指针，format(TYPE)）对一个变量的追踪。
 
+（2026-10-28补）
+实际上，写下这样的代码是丑陋而且愚蠢的，蒟蒻的大脑完全被已有代码思维定势控制了：如果选择指针是`formatter`的函数参数，就会因为是void类型而失去参数信息，而参考上面的写法，一个自然的修改是用宏传参传入指针来省略typeV。进一步地，由于变量本身不再由结构体持有，完全可以传入变量本身。顺便`skeleton`都可以直接交给函数，最后还可以用可变参数宏增强（这个功能相当重要了）：
+```c
+typedef void (*Formatter)();
 
+#define format(skeleton, ...)                                   \
+    ({                                                          \
+        void formatP() {                                        \
+            snprintf(temp, MAX_TEXTBOX, skeleton, __VA_ARGS__); \
+        }                                                       \
+        formatP;                                                \
+    })
+
+    ... skip
+
+    addtextBox(1, BLACK, format("number1: %d", number1));
+```
+还要删去结构体中的`skeleton`和`valuePtr`字段。在此之外还尝试了不用函数指针在update调用宏，用宏直接重写add等，这大概是能实现功能最强的途径了，代码量小而且保证了多参数宏的使用。想要更改追踪的变量也很简单，直接重新制定函数即可。
 
 

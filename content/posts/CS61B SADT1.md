@@ -1,7 +1,7 @@
 ---
 title: "CS61B 集合类抽象数据结构（一）"
 date: 2026-10-07
-tags: ["cpp", "algorithms", "java"]
+tags: ["course", "algorithms", "java"]
 summary: "CS61B学习笔记：BST，lab7"
 ---
 

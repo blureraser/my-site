@@ -1,7 +1,7 @@
 ---
 title: "GAMES103 HW1"
 date: 2026-09-05
-tags: ["godot", "graphics"]
+tags: ["godot", "graphics", "course"]
 summary: "godot中的课程GAMES103的作业一实现（不包括附加题）"
 ---
 作业要求简单地说就是在unity中不使用unity自带物理引擎完成刚体运动学模拟，动力学模拟，碰撞检测和碰撞冲量处理。

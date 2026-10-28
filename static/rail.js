@@ -236,6 +236,15 @@
       title.textContent = '~ $ bricks';
       return ['[ok] bricks loaded (re-seeded, own 2D rigid body engine)'];
     } },
+    life:    { desc: '生命游戏（wasm）',     run: () => {
+      halt();
+      unframe();
+      frame.title = 'lifeviz 康威生命游戏（proj1 → wasm）';
+      frame.src = '/games/lifeviz/index.html?t=' + Date.now();
+      body.classList.add('framed');
+      title.textContent = '~ $ life';
+      return ['[ok] game of life loaded (proj1 raylib → wasm)'];
+    } },
     heat:    { desc: '打字量柱状图',        run: async () => {
       if (!stat) {
         try { stat = await (await fetch('/typing.json')).json(); }
