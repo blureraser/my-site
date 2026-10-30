@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body>
+  {{ partial "sidebar.html" . }}
+  <main>
+    <header class="page-head">
+      <h1>{{ .Title }}</h1>
+      {{ with .Params.subtitle }}<p class="subtitle">{{ . }}</p>{{ end }}
+    </header>
+    <div class="game-grid">
+      {{ range .Params.cards }}
+      <button type="button" class="card game-card" data-app="{{ .app }}" data-name="{{ .name }}" data-ratio="{{ .ratio | default "4 / 3" }}">
+        <h3>{{ .name }}</h3>
+        <p>{{ .desc }}</p>
+      </button>
+      {{ end }}
+    </div>
+    {{ with .Content }}<article class="post-content">{{ . }}</article>{{ end }}
+  </main>
+  {{ partial "rail.html" . }}
+</body>
+</html>

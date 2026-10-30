@@ -29,21 +29,21 @@
   </div>
   {{ end }}
   <nav>
-    <a href="/">home</a>
-    <a href="/posts/">posts</a>
-    <a href="/#stack">stack</a>
-    <a href="/#projects">projects</a>
-    <a href="/#now">now</a>
+    <a href="/">主页</a>
+    <a href="/posts/">帖子</a>
+    <a href="/games/">游戏</a>
+    <a href="/projects/">项目</a>
+    <a href="/about/">关于</a>
   </nav>
-  {{ with where site.RegularPages "Section" "posts" }}
-  <div class="side-posts">
-    <div class="side-h">recent posts</div>
-    {{ range first 4 . }}
-    <a href="{{ .RelPermalink }}">
-      <span class="sp-t">{{ .Title }}</span>
-      <span class="sp-d">{{ .Date.Format "01-02" }}</span>
-    </a>
-    {{ end }}
+  {{ with site.Taxonomies.tags }}
+  <div class="side-tags">
+    <div class="side-h">tags</div>
+    <div class="tag-cloud">
+      {{ range .ByCount }}
+      {{ $s := add 0.72 (mul 0.16 (math.Log (float (add 1 .Count)))) }}
+      <a class="tg" href="{{ .Page.RelPermalink }}" style="{{ printf "font-size: %.3frem" $s | safeCSS }}">#{{ .Page.Title | lower }}<span class="tg-n">{{ .Count }}</span></a>
+      {{ end }}
+    </div>
   </div>
   {{ end }}
   <div class="side-meta">

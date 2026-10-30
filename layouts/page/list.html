@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body>
+  {{ partial "sidebar.html" . }}
+  <main>
+    <header class="page-head">
+      <h1>{{ .Title }}</h1>
+      {{ with .Params.subtitle }}<p class="subtitle">{{ . }}</p>{{ end }}
+    </header>
+    {{ with .Params.cards }}
+    <div class="cards">
+      {{ range . }}
+      <a class="card" href="{{ .url | default "#" }}">
+        <h3>{{ .name }}</h3>
+        <p>{{ .desc }}</p>
+      </a>
+      {{ end }}
+    </div>
+    {{ end }}
+    {{ with .Content }}<article class="post-content">{{ . }}</article>{{ end }}
+  </main>
+  {{ partial "rail.html" . }}
+</body>
+</html>

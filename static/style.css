@@ -70,13 +70,13 @@ html { scroll-behavior: smooth; }
 main {
   padding: 40px 24px 40px 20px;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 section { scroll-margin-top: 16px; }
-section h2::before {
-  content: '> ';
-  color: var(--scard);
-}
 
 header {
   display: flex;
@@ -88,6 +88,7 @@ header {
 footer {
   border-top: 2px solid var(--line);
   text-align: right;
+  margin-top: auto;
 }
 
 header h1 {
@@ -268,12 +269,7 @@ footer a:hover {
   text-decoration: none;
 }
 
-/* 侧栏最近文章 */
-.side-posts {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
+/* 侧栏标签云 */
 .side-h {
   font-size: 0.78rem;
   color: var(--dim);
@@ -281,45 +277,117 @@ footer a:hover {
   opacity: 0.75;
   margin-bottom: 6px;
 }
-.side-posts a {
+.side-tags {
   display: flex;
   flex-direction: column;
-  gap: 1px;
-  margin-left: -8px;
-  padding: 5px 8px;
+  gap: 6px;
+}
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 1px;
+  margin-left: -6px;
+}
+.tg {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+  padding: 1px 6px;
   border-radius: 5px;
+  color: var(--link);
+  line-height: 1.5;
   text-decoration: none;
-  transition: background 0.15s;
+  transition: background 0.15s, color 0.15s;
 }
-.sp-t {
-  font-size: 0.86rem;
-  color: var(--text);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.sp-d {
-  font-size: 0.72rem;
+.tg-n {
+  font-size: 0.66rem;
   color: var(--dim);
-  opacity: 0.65;
+  opacity: 0.6;
 }
-.side-posts a:hover {
+.tg:hover {
   background: var(--h1);
-}
-.side-posts a:hover .sp-t {
   color: var(--scard);
 }
+.tg:hover .tg-n {
+  color: var(--scard);
+  opacity: 0.75;
+}
 
-/* 最近在干什么 */
-.now-list {
+/* 换页渐入（rail.js 局部导航给新的 <main> 加 .page-in） */
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+main.page-in {
+  animation: pageIn 0.28s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  main.page-in { animation: none; }
+}
+
+/* 游戏列表 / 大屏播放 */
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 12px;
+}
+.game-card {
+  display: block;
+  border: 1px solid var(--line);
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.game-player {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  height: calc(100vh - 80px);
 }
-.now-list p {
-  margin: 0;
-  font-size: 0.9rem;
+.gp-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.78rem;
+  color: var(--dim);
 }
+.gp-title { color: var(--scard); font-weight: bold; }
+.gp-close {
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--dim);
+  font: inherit;
+  font-size: 0.74rem;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.gp-close:hover {
+  background: var(--scard);
+  color: #fff;
+}
+.gp-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.gp-frame {
+  display: block;
+  border: 0;
+  border-radius: 10px;
+  background: #fff;
+}
+body.bigplay { grid-template-columns: var(--side-w) minmax(0, 1fr); }
+body.bigplay .rail { display: none; }
+body.bigplay .page-head,
+body.bigplay .game-grid { display: none; }
 
 /* 打字热力图（近 14 周 × 7 天，格子按容器比例自适应） */
 .heat-block { width: 100%; }

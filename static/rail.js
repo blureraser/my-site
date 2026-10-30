@@ -25,6 +25,7 @@
   const out = root.querySelector('.cli-out');
   const input = root.querySelector('.cli-in input');
   const title = root.querySelector('.rw-title');
+  const docBody = document.body;
 
   const cssVar = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 
@@ -328,6 +329,63 @@
   window.addEventListener('resize', redraw);
 
   // 局部导航：换页只替换 <main>，左栏与右栏终端保持不重载
+  const navActive = () => {
+    const path = location.pathname.replace(/index\.html$/, '');
+    document.querySelectorAll('nav a').forEach(a => {
+      const p = new URL(a.href, location.href).pathname;
+      a.classList.toggle('active', p === '/' ? path === '/' : path.startsWith(p));
+    });
+  };
+
+  const closePlayer = () => {
+    const pl = document.querySelector('.game-player');
+    if (pl) {
+      const f = pl.querySelector('.gp-frame');
+      if (f) f.src = 'about:blank';
+      pl.remove();
+    }
+    docBody.classList.remove('bigplay');
+  };
+
+  const fitFrame = () => {
+    const pl = document.querySelector('.game-player');
+    if (!pl) return;
+    const box = pl.querySelector('.gp-body');
+    const f = pl.querySelector('.gp-frame');
+    if (!box || !f) return;
+    const parts = (f.dataset.ratio || '4 / 3').split('/');
+    const r = parts.length === 2
+      ? parseFloat(parts[0]) / parseFloat(parts[1])
+      : (parseFloat(parts[0]) || 4 / 3);
+    const bw = box.clientWidth, bh = box.clientHeight;
+    if (!bw || !bh || !(r > 0)) return;
+    let w = bw, h = w / r;
+    if (h > bh) { h = bh; w = h * r; }
+    f.style.width = Math.round(w) + 'px';
+    f.style.height = Math.round(h) + 'px';
+  };
+
+  window.addEventListener('resize', fitFrame);
+
+  const launch = (app, name, ratio) => {
+    const main = document.querySelector('main');
+    if (!main || !app) return;
+    closePlayer();
+    const pl = document.createElement('section');
+    pl.className = 'game-player';
+    pl.innerHTML = '<div class="gp-bar"><span class="gp-title"></span>'
+      + '<button type="button" class="gp-close">关闭 [Esc]</button></div>'
+      + '<div class="gp-body"><iframe class="gp-frame" title="game"></iframe></div>';
+    const frameEl = pl.querySelector('.gp-frame');
+    frameEl.dataset.ratio = ratio || '4 / 3';
+    frameEl.src = '/games/' + app + '/index.html?t=' + Date.now();
+    pl.querySelector('.gp-title').textContent = name || app;
+    main.appendChild(pl);
+    docBody.classList.add('bigplay');
+    requestAnimationFrame(fitFrame);
+    print('[ok] ' + app + ' launched (big screen, esc to exit)');
+  };
+
   const partial = async (url, push) => {
     let doc;
     try {
@@ -339,14 +397,38 @@
     const next = doc.querySelector('main');
     if (!cur || !next) { location.href = url.href; return; }
     cur.replaceWith(next);
+    next.classList.add('page-in');
     document.title = doc.title;
     document.documentElement.classList.remove('intro', 'noscroll', 'exit', 'reveal', 'launch');
+    docBody.classList.remove('bigplay');
     if (push) history.pushState({}, '', url.href);
     const anchor = url.hash ? document.getElementById(url.hash.slice(1)) : null;
     if (anchor) anchor.scrollIntoView();
     else window.scrollTo(0, 0);
+    navActive();
+    print('[ok] ' + url.pathname + ' loaded (' + doc.title.split(' - ')[0] + ')', 'dim');
     window.dispatchEvent(new CustomEvent('rail:partial'));
   };
+
+  document.addEventListener('click', e => {
+    const card = e.target.closest('[data-app]');
+    if (card) {
+      e.preventDefault();
+      launch(card.dataset.app, card.dataset.name, card.dataset.ratio);
+      return;
+    }
+    if (e.target.closest('.gp-close')) {
+      closePlayer();
+      print('[info] player closed');
+    }
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && docBody.classList.contains('bigplay')) {
+      closePlayer();
+      print('[info] player closed');
+    }
+  });
 
   document.addEventListener('click', e => {
     if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
@@ -361,6 +443,7 @@
 
   window.addEventListener('popstate', () => partial(new URL(location.href), false));
 
+  navActive();
   print('blureraser :: rail shell ready', 'dim');
   print('[info] type `help` for available commands', 'dim');
 
